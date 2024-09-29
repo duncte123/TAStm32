@@ -19,6 +19,7 @@
 *.sfc
 python/__pycache__/
 python/*.py
+python/venv
 !python/argparse_helper.py
 !python/dtm.py
 !python/m64.py

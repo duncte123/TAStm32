@@ -610,10 +610,9 @@ void SetPS2Mode()
     // (ETH 3) pspin 9: Acknowledge: This normally high line drops low about 12us after each byte for half a clock cycle, but not after the last bit in a set.
 
     // #ifdef BOARDV4
-    // MCU D2 input, triggered on falling edge
-    SetupPin(P1_DATA_2_GPIO_Port, P1_DATA_2_Pin | P2_DATA_2_Pin, GPIO_MODE_IT_FALLING, GPIO_NOPULL, GPIO_PIN_SET);
+    // TODO: finish this, get
+    SetupPin(P1_DATA_0_GPIO_Port, P1_DATA_0_Pin | P2_DATA_0_Pin, GPIO_MODE_OUTPUT_OD, GPIO_PULLUP, GPIO_PIN_SET);
 
-    // Set D2/D3 out LOW before anything else, since we're driving open drain (by wiggling enable)
     SetupPin(P1_DATA_2_OUT_GPIO_Port, P1_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
     SetupPin(P2_DATA_2_OUT_GPIO_Port, P2_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
 
