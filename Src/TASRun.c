@@ -595,6 +595,11 @@ void SetGENMode()
 
 void SetPS2Mode()
 {
+    // TODO: remove, for IDE typehinting only
+    #ifndef BOARDV41
+    #define BOARDV4 true
+    #endif
+
     #ifdef BOARDV3
         // TODO: support v3
     #endif
@@ -609,15 +614,18 @@ void SetPS2Mode()
     // (ETH 7) pspin 8: Unknown
     // (ETH 3) pspin 9: Acknowledge: This normally high line drops low about 12us after each byte for half a clock cycle, but not after the last bit in a set.
 
-    // #ifdef BOARDV4
-    // TODO: finish this, get
+    #ifdef BOARDV4
+    // TODO: finish this
+    // ps2 pin1
     SetupPin(P1_DATA_0_GPIO_Port, P1_DATA_0_Pin | P2_DATA_0_Pin, GPIO_MODE_OUTPUT_OD, GPIO_PULLUP, GPIO_PIN_SET);
+    // ps2 pin2
+    SetupPin(P1_DATA_1_GPIO_Port, P1_DATA_1_Pin | P2_DATA_1_Pin, GPIO_MODE_INPUT, GPIO_NOPULL, GPIO_PIN_SET); // Not sure if this is pullup or pulldown
 
-    SetupPin(P1_DATA_2_OUT_GPIO_Port, P1_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
-    SetupPin(P2_DATA_2_OUT_GPIO_Port, P2_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
+    // ps2 pin9
+    SetupPin(P1_DATA_2_GPIO_Port, P1_DATA_2_Pin | P1_DATA_2_Pin, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN, GPIO_PIN_RESET);
 
     // Buffers will already be disabled
-    // #endif
+    #endif
 }
 
 void SetMultitapMode()
