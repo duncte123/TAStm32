@@ -348,6 +348,10 @@ void serial_interface_consume(uint8_t *buffer, uint32_t n)
 						SetNESMode();
 						instance.state = SERIAL_NUM_CONTROLLERS;
 						break;
+                    case 'P': // Setup PS2
+                        TASRunSetConsole(CONSOLE_PS2);
+                        SetPS2Mode();
+                        instance.state = SERIAL_NUM_CONTROLLERS;
 					default: // Error: console type not understood
 						instance.state = SERIAL_COMPLETE;
 						serial_interface_output((uint8_t*)"\xFC", 1);

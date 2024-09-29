@@ -2,6 +2,7 @@
 #define __TASRUN__H
 
 #include <stdint.h>
+#include "ps2.h"
 #include "n64.h"
 #include "snes.h"
 #include "gen.h"
@@ -52,7 +53,8 @@ typedef enum
 	CONSOLE_SNES,
 	CONSOLE_NES,
 	CONSOLE_GC,
-	CONSOLE_GEN
+	CONSOLE_GEN,
+    CONSOLE_PS2,
 } Console;
 
 
@@ -63,6 +65,7 @@ typedef union
 	NESControllerData nes_data;
 	GCControllerData gc_data;
 	GENControllerData gen_data;
+    PS2ControllerData ps2_data;
 } RunData;
 
 typedef enum
@@ -202,6 +205,7 @@ void SetN64Mode();
 void SetNESMode();
 void SetSNESMode();
 void SetGENMode();
+void SetPS2Mode();
 void SetMultitapMode();
 void ResetRun();
 void ResetGPIO(void);

@@ -593,6 +593,34 @@ void SetGENMode()
 	*ptr = (uint32_t) &GenesisLatch;
 }
 
+void SetPS2Mode()
+{
+    #ifdef BOARDV3
+        // TODO: support v3
+    #endif
+
+    // (ETH 4) pspin 1 Data: Controller -> PlayStation
+    // (ETH 5) pspin 2 Command: PlayStation -> Controller
+    // pspin 3: DO NOT CONNECT
+    // (ETH 1) pspin 4: ground
+    // (ETH 2) pspin 5: Power 3.3v for ps2 (5v for ps1, controllers should work from 3 to 5 volts) (should I connect this??????????)
+    // (ETH 6) pspin 6: Attention
+    // (ETH 8) pspin 7: Clock: 500kH/z, normally high on (250kHz on ps1)
+    // (ETH 7) pspin 8: Unknown
+    // (ETH 3) pspin 9: Acknowledge: This normally high line drops low about 12us after each byte for half a clock cycle, but not after the last bit in a set.
+
+    // #ifdef BOARDV4
+    // MCU D2 input, triggered on falling edge
+    SetupPin(P1_DATA_2_GPIO_Port, P1_DATA_2_Pin | P2_DATA_2_Pin, GPIO_MODE_IT_FALLING, GPIO_NOPULL, GPIO_PIN_SET);
+
+    // Set D2/D3 out LOW before anything else, since we're driving open drain (by wiggling enable)
+    SetupPin(P1_DATA_2_OUT_GPIO_Port, P1_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
+    SetupPin(P2_DATA_2_OUT_GPIO_Port, P2_DATA_2_OUT_Pin, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_PIN_RESET);
+
+    // Buffers will already be disabled
+    // #endif
+}
+
 void SetMultitapMode()
 {
 	// If multitap, D2 becomes an interrupt input
