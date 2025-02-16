@@ -349,6 +349,9 @@ void TASRunSetConsole(Console console)
 	case CONSOLE_GEN:
 		tasrun->console_data_size = sizeof(GENControllerData);
 		break;
+    case CONSOLE_PS2:
+        tasrun->console_data_size = sizeof(PS2ControllerData);
+        break;
 	}
 	UpdateRunConfig();
 }
