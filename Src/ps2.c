@@ -11,6 +11,30 @@ uint32_t PS2_ReadCommand(uint8_t player)
     return retVal;
 }
 
+void SendStop(uint8_t player)
+{
+    // TODO: for ide hinting only
+#ifndef BOARDV4
+#define BOARDV4 true
+#endif
+
+// TODO: copied from n64, need to send the correct data
+#ifdef BOARDV4
+    if(player == 1)
+	{
+		ENABLE_P1D2D3_GPIO_Port->BSRR = ENABLE_P1D2D3_Pin<<16;
+		my_wait_us_asm(1);
+		ENABLE_P1D2D3_GPIO_Port->BSRR = ENABLE_P1D2D3_Pin;
+	}
+	else if(player == 2)
+	{
+		ENABLE_P2D2D3_GPIO_Port->BSRR = ENABLE_P2D2D3_Pin<<16;
+		my_wait_us_asm(1);
+		ENABLE_P2D2D3_GPIO_Port->BSRR = ENABLE_P2D2D3_Pin;
+	}
+#endif
+}
+
 void SendByte(uint8_t player, unsigned char b)
 {
     for(int i = 7;i >= 0;i--) // send all 8 bits, one at a time
@@ -26,6 +50,7 @@ void SendByte(uint8_t player, unsigned char b)
     }
 }
 
+// https://archive.org/details/padtest_202111
 void PS2_SendIdentity(uint8_t player)
 {
     // values from https://store.curiousinventor.com/guides/PS2
